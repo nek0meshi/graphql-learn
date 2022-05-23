@@ -13,6 +13,10 @@ const typeDefs = gql`
     books(title: String): [Book]
     book(id: ID!): Book
   }
+
+  type Mutation {
+    addBook(title: String!, author: String!): Book
+  }
 `;
 
 const books = [
@@ -27,6 +31,8 @@ const books = [
     author: 'Paul Author',
   },
 ];
+
+let idAutoIncrement = 3;
 
 const resolvers = {
   Query: {
@@ -43,6 +49,20 @@ const resolvers = {
       return books.find(({ id }) => id === +args.id);
     },
   },
+
+  Mutation: {
+    addBook: (parent, args) => {
+      const book = {
+        id: idAutoIncrement++,
+        title: args.title,
+        author: args.author,
+      };
+
+      books.push(book);
+
+      return book;
+    }
+  }
 };
 
 const server = new ApolloServer({
