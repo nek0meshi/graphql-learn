@@ -1,3 +1,3 @@
 .PHONY: start
 start:
-	npm ci && node index.js
+	npm ci && npm start
