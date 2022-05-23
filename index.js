@@ -10,7 +10,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    books: [Book]
+    books(title: String): [Book]
     book(id: ID!): Book
   }
 `;
@@ -30,7 +30,15 @@ const books = [
 
 const resolvers = {
   Query: {
-    books: () => books,
+    books: (parent, args) => {
+      let res = books
+
+      if (args.title) {
+        res = res.filter(({ title }) => title.includes(args.title))
+      }
+
+      return res
+    },
     book: (parent, args) => {
       return books.find(({ id }) => id === +args.id);
     },
