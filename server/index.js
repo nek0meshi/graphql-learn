@@ -68,7 +68,6 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  csrfPrevention: true,
 });
 
 server.listen().then(({ url }) => {
