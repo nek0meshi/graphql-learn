@@ -1,3 +1,3 @@
-.PHONY: start
-start:
-	npm ci && npm start
+.PHONY: server-start
+server-start:
+	cd server && npm ci && npm start
