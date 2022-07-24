@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch, { RequestInit } from 'node-fetch';
 
 const SERVER_URL = 'http://localhost:4000';
 
@@ -16,11 +16,16 @@ async function addBook() {
   mutationRequest({ query, variables });
 }
 
-async function queryRequest(query) {
-  return await request({}, query);
+async function queryRequest(queryParams: URLSearchParams) {
+  return await request({}, queryParams);
 }
 
-async function mutationRequest(body) {
+type MutationRequestBodyType = {
+  query: string,
+  variables: object,
+};
+
+async function mutationRequest(body: MutationRequestBodyType) {
   return await request(
     {
       method: 'POST',
@@ -33,7 +38,7 @@ async function mutationRequest(body) {
   )
 }
 
-async function request(options, queryParams = null) {
+async function request(options: RequestInit, queryParams: URLSearchParams | null = null) {
   try {
     const res = await fetch(SERVER_URL + (queryParams ? '?' + queryParams : ''), options);
 
