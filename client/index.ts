@@ -3,15 +3,15 @@ import fetch, { RequestInit } from 'node-fetch';
 const SERVER_URL = 'http://localhost:4000';
 
 async function getBooks() {
-  const query = '{books{id title author}}';
+  const query = '{books{id title author {id name}}}';
   queryRequest(new URLSearchParams({ query }));
 }
 
 async function addBook() {
-  const query = 'mutation AddBook($title: String!, $author: String!) { addBook(title: $title, author: $author) { title } }';
+  const query = 'mutation AddBook($title: String!, $author_id: Int!) { addBook(title: $title, author_id: $author_id) { title } }';
   const variables = {
     title: 'タイトル1',
-    author: '著者名1',
+    author_id: 1,
   }
   mutationRequest({ query, variables });
 }
