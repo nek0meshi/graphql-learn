@@ -10,8 +10,8 @@ async function getBooks() {
 async function addBook() {
   const query = 'mutation AddBook($title: String!, $author: String!) { addBook(title: $title, author: $author) { title } }';
   const variables = {
-    title: 'aaa',
-    author: 'bbb',
+    title: 'タイトル1',
+    author: '著者名1',
   }
   mutationRequest({ query, variables });
 }
@@ -33,7 +33,6 @@ async function mutationRequest(body: MutationRequestBodyType) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-
     }
   )
 }
@@ -49,7 +48,7 @@ async function request(options: RequestInit, queryParams: URLSearchParams | null
     }
 
     const data = await res.json();
-    console.log(JSON.stringify(data));
+    console.log(JSON.stringify(data, null, 2));
   } catch (e) {
     console.error(e);
 
